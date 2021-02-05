@@ -12,7 +12,6 @@ interface INote {
 function App(): JSX.Element {
   const [value, setValue] = useState<string>('');
   const [notes, setNotes] = useState<INote[]>([]);
-  const [editNote, setEditNote] = useState(false);
   // debugger;
 
   const handleSubmit = (e: FormElement): void => {
