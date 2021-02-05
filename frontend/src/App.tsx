@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import Note from './components/Note';
 
 type FormElement = React.FormEvent<HTMLFormElement>;
 
@@ -11,6 +12,7 @@ interface INote {
 function App(): JSX.Element {
   const [value, setValue] = useState<string>('');
   const [notes, setNotes] = useState<INote[]>([]);
+  const [editNote, setEditNote] = useState(false);
   // debugger;
 
   const handleSubmit = (e: FormElement): void => {
@@ -54,19 +56,13 @@ function App(): JSX.Element {
       <section>
         {notes.map((note: INote, index: number) => {
           return (
-            <Fragment key={index}>
-              <div
-                style={{ textDecoration: note.complete ? 'line-through' : '' }}
-              >
-                {note.text}
-              </div>
-              <button type="button" onClick={(): void => completeNote(index)}>
-                {note.complete ? 'Incomplete' : 'Complete'}
-              </button>
-              <button type="button" onClick={(): void => deleteNote(index)}>
-                &times;
-              </button>
-            </Fragment>
+            <Note
+              key={'note' + index}
+              note={note}
+              index={index}
+              completeNote={completeNote}
+              deleteNote={deleteNote}
+            />
           );
         })}
       </section>
