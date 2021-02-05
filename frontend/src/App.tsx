@@ -1,41 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState } from 'react';
 
-interface AppProps {}
+type FormElement = React.FormEvent<HTMLFormElement>;
 
-function App({}: AppProps) {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
+interface INote {
+  text: string;
+  complete: boolean;
 }
 
+//JSX.Element: TS custom definition
+function App(): JSX.Element {
+  const [value, setValue] = useState<string>('');
+  const [notes, setNotes] = useState<INote[]>([]);
+  // debugger;
+
+  const handleSubmit = (e: FormElement): void => {
+    e.preventDefault();
+    addNote(value);
+    setValue('');
+  };
+
+  const addNote = (text: string): void => {
+    const newNotes: INote[] = [...notes, { text, complete: false }];
+    setNotes(newNotes);
+  };
+  console.log(notes);
+
+  const completeNote = (index: number): void => {
+    const newNotes: INote[] = [...notes];
+    // switch complete state
+    newNotes[index].complete = !newNotes[index].complete;
+    setNotes(newNotes);
+  };
+
+  const deleteNote = (index: number): void => {
+    const newNotes: INote[] = [...notes];
+    newNotes.splice(index, 1);
+    // newTodos = todos.filter((todo: ITodo) => todo !== newTodos[index]); This also work but must `let newTodos`
+    setNotes(newNotes);
+  };
+
+  return (
+    <>
+      <h1>My notes</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          required
+        />
+        <button type="submit">Add note</button>
+      </form>
+      <section>
+        {notes.map((note: INote, index: number) => {
+          return (
+            <Fragment key={index}>
+              <div
+                style={{ textDecoration: note.complete ? 'line-through' : '' }}
+              >
+                {note.text}
+              </div>
+              <button type="button" onClick={(): void => completeNote(index)}>
+                {note.complete ? 'Incomplete' : 'Complete'}
+              </button>
+              <button type="button" onClick={(): void => deleteNote(index)}>
+                &times;
+              </button>
+            </Fragment>
+          );
+        })}
+      </section>
+    </>
+  );
+}
 export default App;
