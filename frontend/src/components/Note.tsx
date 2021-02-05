@@ -29,7 +29,7 @@ function Note(props: Props) {
             type="button"
             onClick={() => {
               editNoteContent(props.index, value);
-              setEditNote(true);
+              setEditNote(false);
             }}
           >
             Save

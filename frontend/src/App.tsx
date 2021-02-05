@@ -24,7 +24,6 @@ function App(): JSX.Element {
     const newNotes: INote[] = [...notes, { text, complete: false }];
     setNotes(newNotes);
   };
-  console.log(notes);
 
   const completeNote = (index: number): void => {
     const newNotes: INote[] = [...notes];
@@ -36,16 +35,13 @@ function App(): JSX.Element {
   const deleteNote = (index: number): void => {
     const newNotes: INote[] = [...notes];
     newNotes.splice(index, 1);
-    // newTodos = todos.filter((todo: ITodo) => todo !== newTodos[index]); This also work but must `let newTodos`
     setNotes(newNotes);
   };
 
   const editNote = (index: number, text: string): void => {
-    console.log(index);
-    console.log(text);
-    // const newNotes: INote[] = [...notes];
-    // // newTodos = todos.filter((todo: ITodo) => todo !== newTodos[index]); This also work but must `let newTodos`
-    // setNotes(newNotes);
+    const newNotes: INote[] = [...notes];
+    newNotes[index].text = text;
+    setNotes(newNotes);
   };
 
   return (
