@@ -40,6 +40,14 @@ function App(): JSX.Element {
     setNotes(newNotes);
   };
 
+  const editNote = (index: number, text: string): void => {
+    console.log(index);
+    console.log(text);
+    // const newNotes: INote[] = [...notes];
+    // // newTodos = todos.filter((todo: ITodo) => todo !== newTodos[index]); This also work but must `let newTodos`
+    // setNotes(newNotes);
+  };
+
   return (
     <>
       <h1>My notes</h1>
@@ -61,6 +69,7 @@ function App(): JSX.Element {
               index={index}
               completeNote={completeNote}
               deleteNote={deleteNote}
+              editNoteContent={editNote}
             />
           );
         })}
