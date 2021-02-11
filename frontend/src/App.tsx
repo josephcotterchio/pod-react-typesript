@@ -10,8 +10,8 @@ interface INote {
 
 //JSX.Element: TS custom definition
 function App(): JSX.Element {
-  const [value, setValue] = useState<string>('');
-  const [notes, setNotes] = useState<INote[]>([]);
+  const [value, setValue] = useState<string>(' ');
+  const [notes, setNotes] = useState<INote[]>([ ]);
   // debugger;
 
   const handleSubmit = (e: FormElement): void => {
@@ -46,7 +46,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <h1>My notes</h1>
+      <h1>Notes</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -54,7 +54,7 @@ function App(): JSX.Element {
           onChange={(e) => setValue(e.target.value)}
           required
         />
-        <button type="submit">Add note</button>
+        <button type="submit">Add new note</button>
       </form>
       <section>
         {notes.map((note: INote, index: number) => {
